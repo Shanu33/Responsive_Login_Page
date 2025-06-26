@@ -31,9 +31,18 @@ dependencies:
   flutter:
     sdk: flutter
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  lottie: ^2.7.0
+  dotted_border: ^2.0.0
+  flexi_border: ^0.0.1
+  flutter_svg: ^2.0.9
+  figma_squircle: ^0.6.3
+  smooth_corner: ^1.1.1
+
+
 
 dev_dependencies:
   flutter_test:
@@ -45,12 +54,58 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
+  fonts:
+    - family: SansSarifRegular
+      fonts:
+        - asset: "assets/Fonts/SF-Pro-Display-Regular.ttf"
+          weight: 400
+    - family: SansSarifRounded
+      fonts:
+        - asset: "assets/Fonts/SF_Pro_Rounded.ttf"
+          weight: 400
+    - family: Roboto
+      fonts:
+        - asset: "assets/Fonts/Roboto-Regular.ttf"
+          weight: 400
+
+    - family: BBAnonymPro
+      fonts:
+        - asset: "assets/Fonts/BBAnonymPro-Regular.ttf"
+          weight: 400
+        - asset: "assets/Fonts/BBAnonymPro-Light.ttf"
+          weight: 200
+        - asset: "assets/Fonts/BBAnonym.ttf"
+          weight: 500
+  assets:
+    - assets/Image/hi.gif
+    - assets/Image/flags/Flag_of_the_Taliban.svg
+    - assets/Image/flags/iq.svg
+    - assets/Image/flags/ir.svg
+    - assets/Image/flags/sa.svg
+    - assets/Image/flags/IAA.svg
+    - assets/Image/flags/iqLandScap.svg
+    - assets/Image/flags/irLandScap.svg
+    - assets/Image/flags/saLandScap.svg
+    - assets/Image/Painting_Of_Flower_Bouquet.jpg
+    - assets/Image/Facebook Icon.svg
+    - assets/Image/google_icon.svg
+    - assets/Image/Flower_half.jpg
+    - assets/Image/hiFi.gif
+    - assets/Image/sqrHiFi.gif
+    - assets/Image/fulFlower.png
+    - assets/Image/Art.png
+    - assets/Image/Art (1).png
+    - assets/Image/Art (2).png
+    - assets/Image/Art (3).png
+    - assets/Image/half_frame.png
+    - assets/Image/half_hand.png
+    - assets/Image/half_heart.png
+    - assets/Image/half_opequw.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

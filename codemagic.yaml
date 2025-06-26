@@ -1,0 +1,22 @@
+workflows:
+  flutter-app:
+    name: Flutter iOS & Android Build
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Build Android
+        script: flutter build apk --release
+      - name: Build iOS
+        script: flutter build ios --release --no-codesign
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+      - build/ios/iphoneos/*.app
+    publishing:
+      email:
+        recipients:
+          - shahnawaz.sk230@gmail.com
