@@ -19,7 +19,7 @@ class ScreenSizeHelper {
 
   static double sp(double baseSize) {
     if (width < 400 || height < 500) return baseSize * 0.9;
-    if (width > 800) return baseSize * 1.2;
+    if (width > 800) return baseSize * 1.5;
     return baseSize;
   }
 

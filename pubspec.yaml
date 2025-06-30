@@ -41,6 +41,8 @@ dependencies:
   flutter_svg: ^2.0.9
   figma_squircle: ^0.6.3
   smooth_corner: ^1.1.1
+  device_preview: ^1.1.0
+  js: ^0.6.7
 
 
 

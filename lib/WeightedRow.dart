@@ -3,6 +3,7 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:learning_things2/FlexLinearLayout.dart';
 import 'package:learning_things2/SliderIndex.dart';
+import 'package:learning_things2/respPatt.dart';
 import 'ScreenSizer.dart';
 
 enum ScreenMode { portrait, landscape }
@@ -73,7 +74,7 @@ class MyHomeScreen extends State<MyHomePage> {
           style: TextStyle(
             fontFamily: "Roboto",
             fontSize: ScreenSizeHelper.sp(fontSize),
-            color: const Color(0xFF1E4AE9),
+            color: const Color(0xFF0175C2),
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -255,18 +256,13 @@ class MyHomeScreen extends State<MyHomePage> {
                       ),
                     ),
                     SizedBox(height: ScreenSizeHelper.h(4)),
-                    Text(
-                      isLandscape
-                          ? '─' * 18 + '    Or    ' + '─' * 18
-                          : '─' * 13 + '    Or sign in with    ' + '─' * 13,
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontFamily: "Roboto",
-                        fontSize: ScreenSizeHelper.sp(12),
-                        color: const Color(0xFF294957),
-                        fontWeight: FontWeight.w100,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                       ],
                     ),
+
                     SizedBox(height: ScreenSizeHelper.h(2.8)),
                     FlexLinearLayout(
                       Context: context,
