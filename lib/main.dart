@@ -1,27 +1,10 @@
-export 'pwa_utils.dart';
 import 'package:learning_things2/sreener.dart';
-
-import 'platform_utils.dart';
-
-import 'package:flutter/foundation.dart';
-import 'package:device_preview/device_preview.dart';
-
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:learning_things2/FlexLinearLayout.dart';
-import 'pwa_utils_stub.dart';
 import 'package:learning_things2/SliderIndex.dart';
 import 'package:learning_things2/respPatt.dart';
-
-
-
-enum ScreenMode { portrait, landscape }
-ScreenMode getScreenMode(BuildContext context) {
-  final size = MediaQuery.of(context).size;
-  return size.width >= size.height ? ScreenMode.landscape : ScreenMode.portrait;
-}
-
 
 
 void main() {
@@ -57,8 +40,8 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomeScreen extends State<MyHomePage> {
 
-   customSize({required isLandscape}) {
-     const horizontalPadding = EdgeInsets.symmetric(horizontal: 10);
+   customSize({required isLandscape,  height,  width}) {
+     const horizontalPadding = EdgeInsets.symmetric(horizontal: 55,vertical: 20);
      const verticalPaddingWebNative = EdgeInsets.symmetric(vertical: 20, horizontal: 80);
      const defaultPaddingPortrait = EdgeInsets.only( bottom: 20, left: 19, right: 19);
      const androidPotrait = EdgeInsets.only(top: 50, bottom: 10, left: 19, right: 19);
@@ -69,98 +52,154 @@ class MyHomeScreen extends State<MyHomePage> {
      var wbFontSize;
      var hiGIFWH;
      var lineFont;
-     var bannerImageSize=[];
-     var uiElementTopPadding;
-     var signOptionDir;
-     var isMobile;
+     var inputFieldHolderFont=(isLandscape?17:15).toDouble();
+     var myTextFont=(isLandscape?17:15).toDouble();
+     var inputFieldSize= (isLandscape?(height/100)*4.4:(height/100)*4.8).toDouble();
+     var hyperLinkFont=[(isLandscape?17:15).toDouble(),(isLandscape?17.5:16.5).toDouble()];
+     var signInButtonSize=(isLandscape?(height/100)*5.2:(height/100)*5.15).toDouble();
+     var furtherSignInFont=(isLandscape ? 17 : 15).toDouble();
+     var furtherSignInOptionText=isLandscape ? '    Or    ' : '    Or sign in with    ';
+     var ImageButtonOffset=[isLandscape?width/2:(width/100)*41.79,isLandscape?(height/100)*4.5:(height/100)*4.6];
+     var signOptionDir=ChildPlacement.Horizontal;
+     var GglFbText=[isLandscape?"Sign in with Google    ":"Google",isLandscape?"Sign in with Facebook":"Facebook"];
+     var landScpLeftSapce=(isLandscape?(width/100)*12:0).toDouble();
+     var landScpCenterSpace=(isLandscape?(width/100)*12:0).toDouble();
+     var bannerImageSize=[isLandscape ? (width / 100) * 40:width,isLandscape ? height:(height / 100) * 21.1];
+     var imgBtnBtwnSizedBoxSize=!isLandscape?(width/100)*4.10:null;
 
-    /* if(Screener.isMobileBrowser){
-          myPadding=(isLandscape ? verticalPaddingWebNative : defaultPaddingPortrait);
+      if(Screener.isMobileBrowser){
+        myPadding=(isLandscape ? horizontalPadding : defaultPaddingPortrait);
+        PatWidth=(isLandscape?40:15).toDouble(); //
+        wbFontSize=(isLandscape? 27:24).toDouble();
+        hiGIFWH=(isLandscape?35:35).toDouble();
+        lineFont=(isLandscape?17.5:17).toDouble();
+        signOptionDir=isLandscape
+            ?ChildPlacement.Vertical
+            :ChildPlacement.Horizontal;
+        ImageButtonOffset=[isLandscape?(width/100)*18.6:(width/100)*41.79,isLandscape?(height/100)*9:(height/100)*4.5];
+        furtherSignInOptionText='    Or sign in with    ';
+        GglFbText=["Google","Facebook"];
+        landScpLeftSapce=((width/100)*1.5).toDouble();
+        landScpCenterSpace=((width/100)*7).toDouble();
+        bannerImageSize=[isLandscape ? (width / 100) * 34:width,isLandscape ? (height / 100) *89:(height / 100) * 21.1];
+        myTextFont=(isLandscape?17:16).toDouble();
+        inputFieldSize= (isLandscape?(height/100)*9:(height/100)*4.8).toDouble();
+        hyperLinkFont=[(isLandscape?17:16).toDouble(),(isLandscape?17.5:16.5).toDouble()];
+        signInButtonSize=(isLandscape?(height/100)*9.5:(height/100)*5).toDouble();
+        furtherSignInFont=(isLandscape ? 17 : 16).toDouble();
+        inputFieldHolderFont=(isLandscape?17:16).toDouble();
+        imgBtnBtwnSizedBoxSize=!isLandscape?(width/100)*4.10:(width/100)*6.5;
      }
-     if(Screener.isBigScreenBrowser){
+     if(Screener.isDesktopBrowser){
        myPadding=(isLandscape ? verticalPaddingWebNative : defaultPaddingPortrait);
+       PatWidth=(isLandscape?76:20).toDouble();
+       wbFontSize=(isLandscape? 34:25).toDouble();
+       hiGIFWH=(isLandscape?43:33).toDouble();
+       lineFont=(isLandscape?20:16).toDouble();
      }
-     if(Screener.isPWA){
+     if(Screener.isPWA_Mobile){
        myPadding=(isLandscape ? horizontalPadding : defaultPaddingPortrait);
-     }
-     if(Screener.isAndroidNative){
-
-     }*/
-     if (kIsWeb) {
-
-       myPadding = isStandalonePWA()
-           ? (isLandscape ? horizontalPadding : defaultPaddingPortrait)
-           : (isLandscape ? verticalPaddingWebNative : defaultPaddingPortrait);
-
-       PatWidth=isStandalonePWA()
-           ? (isLandscape?40:12).toDouble()
-           : (isLandscape?70:15).toDouble();
-
-       wbFontSize= isStandalonePWA()
-           ?(isLandscape? 26:21).toDouble()
-           :(isLandscape? 34:20).toDouble();
-
-       hiGIFWH= isStandalonePWA()
-           ?(isLandscape?35:30).toDouble()
-           :(isLandscape?43:29).toDouble();
-
-       lineFont=isStandalonePWA()
-           ?(isLandscape?16:14.5).toDouble()
-           :(isLandscape?20:13.5).toDouble();
-       signOptionDir=isStandalonePWA()
-           ?isLandscape? ChildPlacement.Vertical:ChildPlacement.Horizontal
+       PatWidth=(isLandscape?40:15).toDouble(); //
+       wbFontSize=(isLandscape? 27:24).toDouble();
+       hiGIFWH=(isLandscape?35:35).toDouble();
+       lineFont=(isLandscape?17.5:17).toDouble();
+       signOptionDir=isLandscape
+           ?ChildPlacement.Vertical
            :ChildPlacement.Horizontal;
-       isMobile=isStandalonePWA()
-           ?isLandscape?true:false
-           :false;
+       ImageButtonOffset=[isLandscape?(width/100)*18.6:(width/100)*41.79,isLandscape?(height/100)*9:(height/100)*4.5];
+       furtherSignInOptionText='    Or sign in with    ';
+       GglFbText=["Google","Facebook"];
+       landScpLeftSapce=((width/100)*1.5).toDouble();
+       landScpCenterSpace=((width/100)*7).toDouble();
+       bannerImageSize=[isLandscape ? (width / 100) * 34:width,isLandscape ? (height / 100) *89:(height / 100) * 21.1];
+       myTextFont=(isLandscape?17:16).toDouble();
+       inputFieldSize= (isLandscape?(height/100)*9:(height/100)*4.8).toDouble();
+       hyperLinkFont=[(isLandscape?17:16).toDouble(),(isLandscape?17.5:16.5).toDouble()];
+       signInButtonSize=(isLandscape?(height/100)*9.5:(height/100)*5).toDouble();
+       furtherSignInFont=(isLandscape ? 17 : 16).toDouble();
+       inputFieldHolderFont=(isLandscape?17:16).toDouble();
+       imgBtnBtwnSizedBoxSize=!isLandscape?(width/100)*4.10:(width/100)*6.5;
+     }
+     if(Screener.isPWA_Desktop){
+       myPadding=(isLandscape ? verticalPaddingWebNative : defaultPaddingPortrait);
+       PatWidth=(isLandscape?70:20).toDouble();
+       wbFontSize=(isLandscape? 34:20).toDouble();
+       hiGIFWH=(isLandscape?43:29).toDouble();
+       lineFont=(isLandscape?20:13.5).toDouble();
      }
 
-     if (isAndroid()) {
+
+     if (Screener.isAndroidNative) {
        myPadding = isLandscape
            ? horizontalPadding
            : androidPotrait;
-       PatWidth=(isLandscape?40:11).toDouble();
-       wbFontSize=(isLandscape? 26:21).toDouble();
-       hiGIFWH=(isLandscape?35:30).toDouble();
-       lineFont=(isLandscape?16:14.5).toDouble();
+       PatWidth=(isLandscape?40:15).toDouble(); //
+       wbFontSize=(isLandscape? 27:24).toDouble();
+       hiGIFWH=(isLandscape?35:35).toDouble();
+       lineFont=(isLandscape?17.5:17).toDouble();
        signOptionDir=isLandscape
            ?ChildPlacement.Vertical
            :ChildPlacement.Horizontal;
+       ImageButtonOffset=[isLandscape?(width/100)*18.6:(width/100)*41.79,isLandscape?(height/100)*9:(height/100)*4.5];
+       furtherSignInOptionText='    Or sign in with    ';
+       GglFbText=["Google","Facebook"];
+       landScpLeftSapce=((width/100)*1.5).toDouble();
+       landScpCenterSpace=((width/100)*7).toDouble();
+       bannerImageSize=[isLandscape ? (width / 100) * 34:width,isLandscape ? (height / 100) *89:(height / 100) * 21.1];
+       myTextFont=(isLandscape?17:16).toDouble();
+       inputFieldSize= (isLandscape?(height/100)*9:(height/100)*4.8).toDouble();
+       hyperLinkFont=[(isLandscape?17:16).toDouble(),(isLandscape?17.5:16.5).toDouble()];
+       signInButtonSize=(isLandscape?(height/100)*9.5:(height/100)*5).toDouble();
+       furtherSignInFont=(isLandscape ? 17 : 16).toDouble();
+       inputFieldHolderFont=(isLandscape?17:16).toDouble();
+       imgBtnBtwnSizedBoxSize=!isLandscape?(width/100)*4.10:(width/100)*6.5;
      }
-     if (isIOS()) {
+     if (Screener.isIosNative) {
        myPadding = isLandscape
            ? horizontalPadding
            : iOSPotrait;
-       PatWidth=(isLandscape?40:16).toDouble();
-       wbFontSize=(isLandscape? 26:21).toDouble();
-       hiGIFWH=(isLandscape?35:30).toDouble();
-       (isLandscape?16:14.5).toDouble();
+       PatWidth=(isLandscape?40:15).toDouble(); //
+       wbFontSize=(isLandscape? 27:24).toDouble();
+       hiGIFWH=(isLandscape?35:35).toDouble();
+       lineFont=(isLandscape?17.5:17).toDouble();
        signOptionDir=isLandscape
            ?ChildPlacement.Vertical
            :ChildPlacement.Horizontal;
+       ImageButtonOffset=[isLandscape?(width/100)*18.6:(width/100)*41.79,isLandscape?(height/100)*9:(height/100)*4.5];
+       furtherSignInOptionText='    Or sign in with    ';
+       GglFbText=["Google","Facebook"];
+       landScpLeftSapce=((width/100)*1.5).toDouble();
+       landScpCenterSpace=((width/100)*7).toDouble();
+       bannerImageSize=[isLandscape ? (width / 100) * 34:width,isLandscape ? (height / 100) *89:(height / 100) * 21.1];
+       myTextFont=(isLandscape?17:16).toDouble();
+       inputFieldSize= (isLandscape?(height/100)*9:(height/100)*4.8).toDouble();
+       hyperLinkFont=[(isLandscape?17:16).toDouble(),(isLandscape?17.5:16.5).toDouble()];
+       signInButtonSize=(isLandscape?(height/100)*9.5:(height/100)*5).toDouble();
+       furtherSignInFont=(isLandscape ? 17 : 16).toDouble();
+       inputFieldHolderFont=(isLandscape?17:16).toDouble();
+       imgBtnBtwnSizedBoxSize=!isLandscape?(width/100)*4.10:(width/100)*6.5;
      }
-     if(isWindows() || isMacOS() || isLinux()){
+     if(Screener.isWindowsNative || Screener.isMacOSNative || Screener.isLinuxNative){
        myPadding= isLandscape
            ? verticalPaddingWebNative
            :desktopPotrait;
 
-       PatWidth=(isLandscape?40:8).toDouble();
-       wbFontSize=(isLandscape? 34:20).toDouble();
-       hiGIFWH=(isLandscape?43:29).toDouble();
-       lineFont=(isLandscape?20:13.5).toDouble();
-       signOptionDir=ChildPlacement.Horizontal;
+       PatWidth=(isLandscape?40:10).toDouble();
+       wbFontSize=(isLandscape? 34:25).toDouble();
+       hiGIFWH=(isLandscape?43:33).toDouble();
+       lineFont=(isLandscape?20:16).toDouble();
      }
 
-     return [myPadding, PatWidth,wbFontSize, hiGIFWH,lineFont,signOptionDir];
+     return [myPadding, PatWidth,wbFontSize, hiGIFWH,lineFont,signOptionDir,ImageButtonOffset,furtherSignInOptionText,GglFbText,landScpLeftSapce,landScpCenterSpace,bannerImageSize,myTextFont,inputFieldSize,hyperLinkFont,signInButtonSize,furtherSignInFont,inputFieldHolderFont,imgBtnBtwnSizedBoxSize];
    }
 
-    Widget InputField({required Height, required isLandscape,required text}){
+    Widget InputField({required Height, required isLandscape,required text, required fieldHeight,required Width}){
     return SizedBox(
-      height: isLandscape?(Height/100)*4.4:(Height/100)*5.1,
+      height: fieldHeight,
       child: TextField(
         textAlignVertical: TextAlignVertical.top,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(bottom: 10,left: 14),
+            contentPadding: EdgeInsets.only(top: 0,left: 16,right: 0,bottom: 0),
             border: InputBorder.none,
             filled: true,
             fillColor: Color(0xFFF3F7FB),
@@ -175,13 +214,13 @@ class MyHomeScreen extends State<MyHomePage> {
                 fontFamily: "Roboto",
                 fontWeight: FontWeight.w100,
                 color: Color(0xFF8897AD),
-                fontSize:isLandscape?14:12
+                fontSize:customSize(isLandscape: isLandscape,height: Height,width: Width)[17]
             )
         ),
       ),
     );}
 
-  Widget HyperLink({required text, required isLandscape, required fontOffset, alignment=Alignment.center,OnTap}){
+  Widget HyperLink({required text, required isLandscape, required FontSize, alignment=Alignment.center,OnTap}){
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -193,7 +232,7 @@ class MyHomeScreen extends State<MyHomePage> {
             text,
             style: TextStyle(
                 fontFamily: "Roboto",
-                fontSize: isLandscape?fontOffset[0].toDouble():fontOffset[1].toDouble(),
+                fontSize: FontSize,
                 color: Color(0xFF1E4AE9),
                 fontWeight: FontWeight.w500
             ),
@@ -206,8 +245,8 @@ class MyHomeScreen extends State<MyHomePage> {
 
   Widget ImageButton({required Height, required Width, required isLandscape , required Image, required textOffset,required widthOffset,required heightOffset}){
     return SizedBox(
-      height: isLandscape?(Height/100)*4.56:(Height/100)*4.73,
-      width: isLandscape?Width/2:(Width/100)*41.79,
+      height: customSize(isLandscape: isLandscape,height: Height, width: Width)[6][1],
+      width: customSize(isLandscape: isLandscape,height: Height, width: Width)[6][0],
       child: TextButton(
           onPressed: (){},
           style: TextButton.styleFrom(
@@ -228,10 +267,10 @@ class MyHomeScreen extends State<MyHomePage> {
                 height: isLandscape?heightOffset[0].toDouble():heightOffset[1].toDouble(),
               ),
               Text(
-                isLandscape?textOffset[0]:textOffset[1],
+                textOffset,
                 style: TextStyle(
                     fontFamily: "Roboto",
-                    fontSize: 13,
+                    fontSize: 16,
                     fontWeight: FontWeight.w100,
                     color: Color(0xFF313957)
                 ),
@@ -243,13 +282,13 @@ class MyHomeScreen extends State<MyHomePage> {
     ;
   }
 
-  Widget myText({required text, required isLandscape}){
+  Widget myText({required text, required isLandscape, required FontSize}){
     return Align(
       alignment: Alignment.bottomLeft,
       child: Text(
         text,
         style: TextStyle(
-            fontSize: isLandscape?14:12,
+            fontSize: FontSize,
             fontFamily: "Roboto",
             fontWeight: FontWeight.w500
         ),
@@ -284,6 +323,7 @@ class MyHomeScreen extends State<MyHomePage> {
         "assets/Image/half_frame.png"];
 
     final bannerImage =imageList[SliderIndex.Counter];
+    final customValues = customSize(isLandscape: isLandscape, height: Height, width: Width);
 
     Widget uiWrapper({required Widget child, required EdgeInsets padding}) {
       return isLandscape
@@ -298,12 +338,13 @@ class MyHomeScreen extends State<MyHomePage> {
     }
 
 
+
     // TODO: implement build
     return Scaffold(
       //backgroundColor: Color(0xFDFFFFFD),
       body: Container(
         color: Color(0xFDFFFFFD),
-        padding:customSize(isLandscape: isLandscape)[0],
+        padding:customValues[0],
 
         child: FlexLinearLayout(
             Context: context,
@@ -313,15 +354,16 @@ class MyHomeScreen extends State<MyHomePage> {
               Stack(
                 children: [
                   // Image background
-                  ClipSmoothRect(
-                    radius: SmoothBorderRadius(cornerRadius: 18, cornerSmoothing: 1),
-                    child: Image.asset(
-                      bannerImage,
-                      width: isLandscape ? (Width / 100) * 40:Width,
-                      height: isLandscape ? Height:(Height / 100) * 21.1 ,
-                      fit: isLandscape ? BoxFit.fill : BoxFit.cover,
+                    ClipSmoothRect(
+                      radius: SmoothBorderRadius(cornerRadius: 18, cornerSmoothing: 1),
+                      child: Image.asset(
+                        bannerImage,
+                        width: customValues[11][0],
+                        height: customValues[11][1],
+                        fit: isLandscape ? BoxFit.fill : BoxFit.cover,
+                      ),
                     ),
-                  ),
+
 
                   // Transparent left/right buttons
                   Positioned.fill(
@@ -358,181 +400,188 @@ class MyHomeScreen extends State<MyHomePage> {
               ),
 
 
-              SizedBox(width: isLandscape?(Width/100)*14:0),
+              SizedBox(width: customValues[10]),
 
               Expanded(
                 flex: flexLower,
                 child: uiWrapper(
                   padding: isLandscape?EdgeInsets.only(top: (Height/100)*4,)
                       : EdgeInsets.only(top: (Height/100)*2.6),
-
-                  child: Column(
-                    children: [
-                      Row(
-                        spacing: 3,
-                        children: [
-                          Text(
-                            "Welcome Back",
-                            style: TextStyle(
-                              fontFamily: "SansSarifRounded",
-                              fontSize:customSize(isLandscape: isLandscape)[2],
-                              fontWeight: FontWeight.bold
-                            ),
+                child: Column(
+                  children: [
+                    Row(
+                      spacing: 3,
+                      children: [
+                        Text(
+                          "Welcome Back",
+                          style: TextStyle(
+                            fontFamily: "SansSarifRounded",
+                            fontSize:customValues[2],
+                            fontWeight: FontWeight.bold
                           ),
+                        ),
 
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 9),
-                            child: Image.asset(
-                              "assets/Image/hiFi.gif",
-                              width: customSize(isLandscape: isLandscape)[3],
-                              height: customSize(isLandscape: isLandscape)[3],
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 9),
+                          child: Image.asset(
+                            "assets/Image/hiFi.gif",
+                            width: customValues[3],
+                            height: customValues[3],
+                          ),
+                        )
+                      ],
+                    ) ,
+
+                    SizedBox(height: isLandscape?(Height/100)*2.46:(Height/100)*0.4,),
+
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Today is new day. It's your day. You shape it.Sign in to start your projects.",
+                        style: TextStyle(
+                          fontSize: customValues[4],
+                          fontFamily: "SansSarifRegular",
+                        ),
+                        maxLines: 3,
+                      ),
+                    ),
+
+                    SizedBox(height: isLandscape?(Height/100)*4.21:(Height/100)*2.2,),
+
+                    myText(text: "Email", isLandscape: isLandscape,FontSize: customValues[12]),
+
+                    InputField(
+                        Height: Height,
+                        Width: Width,
+                        isLandscape: isLandscape,
+                        text: "Example@email.com",
+                        fieldHeight: customValues[13]
+                    ),
+
+                    SizedBox(height: isLandscape?(Height/100)*2.2:(Height/100)*1.6,),
+
+                    myText(text: "Password", isLandscape: isLandscape,FontSize: customValues[12]),
+
+                    InputField(
+                        Height: Height,
+                        Width: Width,
+                        isLandscape: isLandscape,
+                        text: "At least 8 characters",
+                        fieldHeight: customValues[13]
+                    ),
+
+                    SizedBox(height: isLandscape?(Height/100)*2.1:(Height/100)*1.59,),
+
+                    HyperLink(
+                        text: "Forgot Password?",
+                        isLandscape: isLandscape,
+                        FontSize: customValues[14][0],
+                        alignment: Alignment.centerRight,OnTap: (){}),
+
+                    SizedBox(height: isLandscape?(Height/100)*2.1:(Height/100)*1.59,),
+
+                    SizedBox(
+                      height: customValues[15],
+                      width: isLandscape?Width/2:Width,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.all(0),
+                          backgroundColor: Color(0xFF162D3A),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          )
+                        ),
+                          onPressed: (){},
+                          child: Text(
+                            "Sign in",
+                            style: TextStyle(
+                              color: Color(0xFFFFFFFF),
+                              fontSize: isLandscape?17:16,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w100
                             ),
                           )
-                        ],
-                      ) ,
+                      ),
+                    ),
 
-                      SizedBox(height: isLandscape?(Height/100)*2.46:(Height/100)*0.4,),
+                    SizedBox(height: isLandscape?(Height/100)*4.21:(Height/100)*4.5,),
 
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Today is new day. It's your day. You shape it.Sign in to start your projects.",
+                    patternedLine(
+                        screenWidth: Width,
+                        textStyle:TextStyle(
+                          fontFamily: "Roboto",
+                          fontSize: customValues[16],
+                          fontWeight: FontWeight.w100,
+                          color: const Color(0xFF294957),
+                        ),
+                        text:customValues[7],
+                      pattern: "\u2500",
+                      charWidth: customValues[1]
+                    ),
+
+                    SizedBox(height: isLandscape?(Height/100)*2.1:(Height/100)*2.8,),
+
+                    FlexLinearLayout(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      childPlacement: customValues[5],
+                      Context: context,
+                      children: [
+                        ImageButton(
+                            Height: Height,
+                            Width: Width,
+                            isLandscape: isLandscape,
+                            Image: "assets/Image/google_icon.svg",
+                            textOffset: customValues[8][0],
+                            widthOffset: [24,22],
+                          heightOffset: [24,22]
+                        ),
+
+                        SizedBox(
+                          width: customValues[18],
+                          height: isLandscape?(Height/100)*1.5:null,
+                        ),
+
+                        ImageButton(
+                            Height: Height,
+                            Width: Width,
+                            isLandscape: isLandscape,
+                            Image:"assets/Image/Facebook Icon.svg",
+                            textOffset: customValues[8][1],
+                            widthOffset: [26.5,25],
+                            heightOffset: [26.5,25]
+                        ),
+
+                      ]
+                    ),
+                    SizedBox(
+                      height: isLandscape?(Height/100)*4.21:(Height/100)*2,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment:CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't you have an account?",
                           style: TextStyle(
-                            fontSize: customSize(isLandscape: isLandscape)[4],
-                            fontFamily: "SansSarifRegular",
-                          ),
-                          maxLines: 3,
-                        ),
-                      ),
-
-                      SizedBox(height: isLandscape?(Height/100)*4.21:(Height/100)*2.2,),
-
-                      myText(text: "Email", isLandscape: isLandscape),
-
-                      InputField(
-                          Height: Height,
-                          isLandscape: isLandscape,
-                          text: "Example@email.com"),
-
-                      SizedBox(height: isLandscape?(Height/100)*2.2:(Height/100)*1.6,),
-
-                      myText(text: "Password", isLandscape: isLandscape),
-
-                      InputField(
-                          Height: Height,
-                          isLandscape: isLandscape,
-                          text: "At least 8 characters"),
-
-                      SizedBox(height: isLandscape?(Height/100)*2.1:(Height/100)*1.59,),
-
-                      HyperLink(
-                          text: "Forgot Password?",
-                          isLandscape: isLandscape,
-                          fontOffset: [14,12],
-                          alignment: Alignment.centerRight,OnTap: (){}),
-
-                      SizedBox(height: isLandscape?(Height/100)*2.1:(Height/100)*1.59,),
-
-                      SizedBox(
-                        height: isLandscape?(Height/100)*4.56:(Height/100)*5.15,
-                        width: isLandscape?Width/2:Width,
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: Color(0xFF162D3A),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            )
-                          ),
-                            onPressed: (){},
-                            child: Text(
-                              "Sign in",
-                              style: TextStyle(
-                                color: Color(0xFFFFFFFF),
-                                fontSize: isLandscape?17:13,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w100
-                              ),
-                            )
-                        ),
-                      ),
-
-                      SizedBox(height: isLandscape?(Height/100)*4.21:(Height/100)*4.5,),
-
-                      patternedLine(
-                          screenWidth: Width,
-                          textStyle:TextStyle(
                             fontFamily: "Roboto",
-                            fontSize: isLandscape ? 14 : 12,
-                            fontWeight: FontWeight.w100,
-                            color: const Color(0xFF294957),
+                            fontSize: customValues[14][1],
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF313957)
                           ),
-                          text:isLandscape ? '    Or    ' : '    Or sign in with    ',
-                        pattern: "\u2500",
-                        charWidth: customSize(isLandscape: isLandscape)[1]
-                      ),
+                        ),
 
-                      SizedBox(height: isLandscape?(Height/100)*2.1:(Height/100)*2.8,),
+                        HyperLink(text: "Sign up", isLandscape: isLandscape, FontSize: customValues[14][1],OnTap: (){}),
 
-                      FlexLinearLayout(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        childPlacement: customSize(isLandscape: isLandscape)[5],
-                        Context: context,
-                        children: [
-                          ImageButton(
-                              Height: Height,
-                              Width: Width,
-                              isLandscape: isLandscape,
-                              Image: "assets/Image/google_icon.svg",
-                              textOffset: ["Sign in with Google    ","Google"],
-                              widthOffset: [24,20],
-                            heightOffset: [24,20]
-                          ),
-
-                          SizedBox(
-                            width: !isLandscape?(Width/100)*4.10:null,
-                            height: isLandscape?(Height/100)*1.5:null,
-                          ),
-
-                          ImageButton(
-                              Height: Height,
-                              Width: Width,
-                              isLandscape: isLandscape,
-                              Image:"assets/Image/Facebook Icon.svg",
-                              textOffset: ["Sign in with Facebook","Facebook"],
-                              widthOffset: [26.5,23],
-                              heightOffset: [26.5,23]
-                          ),
-
-                        ]
-                      ),
-                      SizedBox(
-                        height: isLandscape?(Height/100)*4.21:(Height/100)*2,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't you have an account?",
-                            style: TextStyle(
-                              fontFamily: "Roboto",
-                              fontSize: isLandscape?15.5:13.5,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFF313957)
-                            ),
-                          ),
-
-                          HyperLink(text: "Sign up", isLandscape: isLandscape, fontOffset: [15.5,13.5],OnTap: (){}),
-
-                        ],
-                      )
-                    ],
-                  ),
+                      ],
+                    )
+                  ],
+                ),
                 ),
               ),
 
               SizedBox(
-                width: isLandscape?(Width/100)*14:0,
+                width: customValues[9]
               ),
 
             ]),

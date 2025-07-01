@@ -1,47 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-
 import 'platform_utils.dart';
 import 'pwa_utils.dart';
-enum orientation{
-  landscape,
-  potrait
+
+enum ScreenMode { portrait, landscape }
+ScreenMode getScreenMode(BuildContext context) {
+  final size = MediaQuery.of(context).size;
+  return size.width >= size.height ? ScreenMode.landscape : ScreenMode.portrait;
 }
-class Screener{
-  static bool isMobileBrowser=false;
-  static bool isBigScreenBrowser=false;
-  static bool isPWA=false;
-  static bool isAndroidNative=false;
-  static bool isIosNative=false;
-  static bool isWindowsNative=false;
-  static bool isMacOSNative=false;
-  static bool isLinuxNative=false;
+class Screener {
+  static final bool isMobileBrowser = kIsWeb && !isStandalonePWA() && isMobileUserAgent();
+  static final bool isDesktopBrowser = kIsWeb && !isStandalonePWA() && !isMobileUserAgent();
 
+  static final bool isPWA_Mobile = kIsWeb && isStandalonePWA() && isMobileUserAgent();
+  static final bool isPWA_Desktop = kIsWeb && isStandalonePWA() && !isMobileUserAgent();
 
-  mobileBrowser(BuildContext context,bigScreenOffset,mobileScreenOffset){
-    if(kIsWeb){
-      if(isStandalonePWA()){
-        isPWA=true;
-      }
-      else if(isMobileUserAgent()){
-          isMobileBrowser=true;
-      }
-      else{
-        isBigScreenBrowser=true;
-      }
-    }
-
-    if(isAndroid())
-          isAndroidNative=true;
-    if(isIOS())
-      isIosNative=true;
-    if(isWindows())
-      isWindowsNative=true;
-    if(isMacOS())
-      isMacOSNative=true;
-    if(isLinux())
-      isLinuxNative=true;
-
-  }
-
+  static final bool isAndroidNative = isAndroid();
+  static final bool isIosNative = isIOS();
+  static final bool isWindowsNative = isWindows();
+  static final bool isMacOSNative = isMacOS();
+  static final bool isLinuxNative = isLinux();
 }
